@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.coverage
+.pytest_cache/
+data/checkpoints/*
+!data/checkpoints/.gitkeep
+data/out/*
+!data/out/.gitkeep

@@ -1,0 +1,11 @@
+# Force LF everywhere, regardless of the cloning machine's OS or git
+# core.autocrlf setting. Without this, a Windows checkout with the common
+# core.autocrlf=true default silently rewrites every text file to CRLF -
+# including the bash embedded in docker-compose.yml's `command:` blocks and
+# the Makefile, both of which break when read by a Linux container/make.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.parquet binary

@@ -1,0 +1,116 @@
+services:
+  kafka:
+    image: apache/kafka:3.7.0
+    container_name: kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,DOCKER://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,DOCKER://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
+      # Default JVM heap for this image is 1G; a single-broker dev instance
+      # with two small topics doesn't need it, and it's the single biggest
+      # fixed cost on memory-constrained dev machines.
+      KAFKA_HEAP_OPTS: "-Xmx512m -Xms512m"
+    mem_limit: 768m
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # One-shot: creates `transactions` (3 partitions) and `fraud-alerts` (1
+  # partition) - the brief's exact topic names - then exits. spark-job,
+  # producer, and api all wait on this instead of relying on Kafka's
+  # auto-create-on-first-use default, so partition counts stay consistent
+  # exactly on every `docker compose up`, not just the first one.
+  kafka-init:
+    image: apache/kafka:3.7.0
+    depends_on:
+      kafka:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        set -e
+        /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --topic transactions \
+          --bootstrap-server kafka:29092 --partitions 3 --replication-factor 1
+        /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --topic fraud-alerts \
+          --bootstrap-server kafka:29092 --partitions 1 --replication-factor 1
+        /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server kafka:29092
+
+  spark-job:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    container_name: spark-job
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      # spark-submit puts the script's own directory (/app/spark), not the
+      # WORKDIR (/app), at the front of sys.path - without this, `common` is
+      # unimportable from spark/job.py. producer/api don't need this since
+      # they're launched via `python -m`, which already puts the cwd on
+      # sys.path.
+      PYTHONPATH: /app
+    mem_limit: 1536m
+    restart: on-failure:3
+    volumes:
+      - ./data:/app/data
+      - ./ml/artifacts:/app/ml/artifacts
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        set -e
+        # A model trained on a Windows host ships with CRLF line endings;
+        # LightGBM's C++ parser on Linux chokes on the bare \r. Strip them
+        # here as a safety net (scoring.py also normalises via model_str).
+        if [ -f ml/artifacts/model.txt ]; then sed -i 's/\r$$//' ml/artifacts/model.txt; fi
+        SPARK_KAFKA_PACKAGE=org.apache.spark:spark-sql-kafka-0-10_2.12:$$(python -c 'import pyspark; print(pyspark.__version__)')
+        if [ ! -f ml/artifacts/model.txt ]; then python -m ml.train; fi
+        spark-submit --packages $$SPARK_KAFKA_PACKAGE spark/job.py
+
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    container_name: producer
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    mem_limit: 256m
+    restart: on-failure:3
+    command: ["python", "-m", "producer.producer", "--rate", "50", "--seed", "42", "--limit", "200000"]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    container_name: api
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    ports:
+      - "8000:8000"
+    mem_limit: 256m
+    restart: on-failure:3
+    # Never --reload (Trap D): the reloader forks a second process
+    # that joins the same consumer group as the first, and fraud-alerts has
+    # one partition - only one of the two would ever receive anything.
+    command: ["python", "-m", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

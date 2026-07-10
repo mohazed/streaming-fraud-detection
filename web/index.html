@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>fraud-stream</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <header>
+    <h1>fraud&#8209;stream</h1>
+    <span id="pill" class="pill pill-connecting">connecting</span>
+  </header>
+
+  <!-- Panel 1: Vitals -->
+  <section id="vitals" class="strip">
+    <div class="card stat">
+      <div class="label">alerts / min</div>
+      <div class="stat-val num" id="rate">0</div>
+    </div>
+    <div class="card stat">
+      <div class="label">total alerts</div>
+      <div class="stat-val num" id="total">0</div>
+    </div>
+    <div class="card">
+      <div class="label">by rule</div>
+      <div class="bars" id="by-rule"></div>
+    </div>
+    <div class="card">
+      <div class="label">by severity</div>
+      <div class="bars" id="by-sev"></div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Panel 2: Feed -->
+    <section class="card" id="feed-panel">
+      <div class="panel-head">feed</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="c-sev"></th>
+              <th>rule</th>
+              <th>user</th>
+              <th class="c-amt">amount</th>
+              <th>location</th>
+              <th class="c-time">time</th>
+            </tr>
+          </thead>
+          <tbody id="feed"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Panel 3: Metrics -->
+    <aside class="card" id="metrics">
+      <div class="panel-head">metrics</div>
+
+      <div class="tau-row">
+        <label for="tau">&tau;</label>
+        <input type="range" id="tau" min="0" max="1" step="0.01" value="0.65">
+        <span class="num" id="tau-val">0.65</span>
+      </div>
+      <div class="note" id="scored-note">no scored alerts yet</div>
+
+      <div class="pr">
+        <div>
+          <div class="label">precision</div>
+          <div class="num big" id="precision">&mdash;</div>
+        </div>
+        <div>
+          <div class="label">recall</div>
+          <div class="num big" id="recall">&mdash;</div>
+        </div>
+      </div>
+
+      <div class="label cm-title">confusion &mdash; flag when p_fraud &ge; &tau;</div>
+      <table class="cm">
+        <thead>
+          <tr><th></th><th>fraud</th><th>legit</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>flag</th>
+            <td class="num" id="cm-tp">0</td>
+            <td class="num" id="cm-fp">0</td>
+          </tr>
+          <tr>
+            <th>pass</th>
+            <td class="num" id="cm-fn">0</td>
+            <td class="num" id="cm-tn">0</td>
+          </tr>
+        </tbody>
+      </table>
+    </aside>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
