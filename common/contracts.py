@@ -1,4 +1,4 @@
-"""Frozen contracts: schemas, rule names, thresholds. See PLAN.md §5.
+"""Frozen contracts: schemas, rule names, thresholds.
 
 Short and frozen, imported everywhere. No magic strings anywhere else.
 """
@@ -17,7 +17,7 @@ from pyspark.sql.types import (
 TRANSACTION_FIELDS = ("user_id", "transaction_id", "amount", "currency",
                       "timestamp", "location", "method")
 
-# Eighth field: simulator ground truth. Never a feature. See PLAN.md §2.3.
+# Eighth field: simulator ground truth. Never a feature.
 LABEL_FIELD = "is_fraud"
 
 CURRENCIES = ("EUR", "USD", "GBP")

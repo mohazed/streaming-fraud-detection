@@ -1,5 +1,5 @@
 """Trap E guard: fan out alerts to every SSE subscriber without ever letting a
-slow or idle browser tab block the producer. See PLAN.md §8 Trap E.
+slow or idle browser tab block the producer.
 
 Pure asyncio - no Kafka, no FastAPI - so it is unit-testable standalone.
 """

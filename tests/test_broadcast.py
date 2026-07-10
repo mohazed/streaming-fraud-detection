@@ -1,5 +1,4 @@
-"""Trap E guard tests. Pure asyncio - no Kafka, no FastAPI. See PLAN.md §8 Trap E,
-§11 test_broadcast.py.
+"""Trap E guard tests. Pure asyncio - no Kafka, no FastAPI.
 """
 from __future__ import annotations
 

@@ -3,9 +3,9 @@ three independent streaming queries reading `transactions` once each.
 
 Q1 (high_value + ml_score) is stateless append; both rules share a query and
 a checkpoint since neither is windowed. Q2 (velocity) and Q3 (geo_hop) are
-outputMode("update") - PLAN.md §8 Trap A - and every alert they emit is
-routed through its own AlertDeduper before write_alerts - Trap B. Each query
-gets its own checkpoint path from common/config.py - Trap C.
+outputMode("update") - Trap A - and every alert they emit is routed through
+its own AlertDeduper before write_alerts - Trap B. Each query gets its own
+checkpoint path from common/config.py - Trap C.
 """
 from __future__ import annotations
 
@@ -75,8 +75,8 @@ def build_queries(source: DataFrame, config: Config = CONFIG,
     enriched = enrich(source)
     velocity_deduper, geo_deduper = AlertDeduper(), AlertDeduper()
 
-    scoring._load()  # startup runtime assertion (PLAN.md §14): dies loudly on
-                      # a FEATURE_ORDER mismatch instead of scoring garbage.
+    scoring._load()  # startup runtime assertion: dies loudly on a
+                      # FEATURE_ORDER mismatch instead of scoring garbage.
     user_profiles = source.sparkSession.read.parquet(config.user_profiles_path)
     tau = scoring.load_threshold()
     row_alerts = high_value_rule(enriched).unionByName(

@@ -1,9 +1,8 @@
 """Phase 4b dashboard demo launcher (no Docker / no Kafka required).
 
 Runs the REAL api.main.create_app() unmodified. The ONLY substitution is the
-Kafka consumer_factory: dev sandboxes here have no broker (see CODEBASE_NOTES
-"Known issues" / memory no_docker_sandbox), so instead of a live
-confluent_kafka.Consumer receiving `fraud-alerts` produced by a real
+Kafka consumer_factory: dev sandboxes here have no broker, so instead of a
+live confluent_kafka.Consumer receiving `fraud-alerts` produced by a real
 spark/job.py, we inject a fake consumer whose poll() synthesizes one
 ALERT_SCHEMA-shaped alert every ~0.5s. Everything downstream (Broadcaster,
 the /api/stream SSE route, StaticFiles serving web/) is production code.

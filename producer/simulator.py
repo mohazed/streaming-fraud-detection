@@ -1,7 +1,7 @@
 """Pure, seeded transaction simulator. No I/O, no Kafka, no ambient clock.
 
 Deterministic: generate(seed, n, start) always returns the same list of dicts
-for the same inputs. See PLAN.md §6.
+for the same inputs.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ _MAX_USERS = _USER_ID_MAX - _USER_ID_MIN + 1
 _NEW_USER_PROB = 0.2
 _BIG_SPENDER_PROB = 0.08
 
-# Archetype injection probabilities, checked per generated record. See PLAN.md §6.
+# Archetype injection probabilities, checked per generated record.
 _P_WHALE, _P_BURST, _P_TRAVELLER = 0.004, 0.0015, 0.003
 _WHALE_MIN, _WHALE_MAX = 1200.0, 8000.0
 _BURST_LEN_MIN, _BURST_LEN_MAX = 5, 8
@@ -49,7 +49,7 @@ def _new_user(rng: random.Random, index: int) -> _User:
     home_city = rng.choice(_CITY_NAMES)
     # A minority of users are big spenders: their lognormal median alone can clear
     # HIGH_VALUE_EUR, which is what makes normal (non-fraud) traffic sometimes
-    # exceed 1000 on its own. See PLAN.md §6.
+    # exceed 1000 on its own.
     if rng.random() < _BIG_SPENDER_PROB:
         mu = rng.uniform(6.3, 7.2)
     else:

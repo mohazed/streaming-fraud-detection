@@ -1,18 +1,16 @@
-"""Not pytest - PLAN.md §13. Run this before you present:
+"""Not pytest. Run this before you present:
 
     make smoke
 
 Brings up the real Kafka broker via `docker compose`, then drives the real
 `producer/producer.py` and `spark/job.py` (via `spark-submit`, on the host,
-against Kafka's host-mapped PLAINTEXT listener - the same pattern
-CODEBASE_NOTES calls "the real Kafka path") and the real `api/main.py`
-against a live alerts topic. All 18 assertions from PLAN.md §13.
-Tears the stack down on the way out, whether it passed or failed, and prints
-exactly which assertion failed if it did.
+against Kafka's host-mapped PLAINTEXT listener - "the real Kafka path")
+and the real `api/main.py` against a live alerts topic. All 18 assertions
+run end to end. Tears the stack down on the way out, whether it passed
+or failed, and prints exactly which assertion failed if it did.
 
 Requires: Docker running, and this project's venv active with
-JAVA_HOME pointed at a JDK 17 (see CODEBASE_NOTES "Phase 3 environment") -
-`make smoke` documents both.
+JAVA_HOME pointed at a JDK 17 - `make smoke` documents both.
 """
 from __future__ import annotations
 
@@ -33,7 +31,7 @@ sys.path.insert(0, str(ROOT))
 from common.config import CONFIG  # noqa: E402
 from common.contracts import ALERT_SCHEMA, RULE_NAMES  # noqa: E402
 
-SEED = 42  # produces >=1 whale/burst/traveller within 5000 records - see PLAN.md §13
+SEED = 42  # produces >=1 whale/burst/traveller within 5000 records
 RATE = 50
 LIMIT = 5000
 CONSUME_SECONDS = 90
@@ -196,9 +194,9 @@ def assert_schema_conformance(alerts: list[dict]) -> None:
 
 
 def _window_start(rule: str, event_time: datetime) -> datetime | None:
-    # window_start itself never reaches a sink (it's driver-side dedup state,
-    # PLAN.md §8 Trap B) - tumbling windows align to the epoch with no offset,
-    # so it can be recomputed here from event_time for the two windowed rules.
+    # window_start itself never reaches a sink (it's driver-side dedup state) -
+    # tumbling windows align to the epoch with no offset, so it can be
+    # recomputed here from event_time for the two windowed rules.
     if rule == "velocity":
         return event_time.replace(second=0, microsecond=0)
     if rule == "geo_hop":

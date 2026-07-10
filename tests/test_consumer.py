@@ -1,5 +1,4 @@
-"""No broker: FakeKafkaConsumer yields scripted messages. See PLAN.md §8 Trap D,
-§11 test_consumer.py.
+"""No broker: FakeKafkaConsumer yields scripted messages (Trap D).
 """
 from __future__ import annotations
 

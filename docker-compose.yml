@@ -32,7 +32,7 @@ services:
   # One-shot: creates `transactions` (3 partitions) and `fraud-alerts` (1
   # partition) - the brief's exact topic names - then exits. spark-job,
   # producer, and api all wait on this instead of relying on Kafka's
-  # auto-create-on-first-use default, so partition counts match PLAN.md §12
+  # auto-create-on-first-use default, so partition counts stay consistent
   # exactly on every `docker compose up`, not just the first one.
   kafka-init:
     image: apache/kafka:3.7.0
@@ -106,7 +106,7 @@ services:
       - "8000:8000"
     mem_limit: 256m
     restart: on-failure:3
-    # Never --reload (PLAN.md §8 Trap D): the reloader forks a second process
+    # Never --reload (Trap D): the reloader forks a second process
     # that joins the same consumer group as the first, and fraud-alerts has
     # one partition - only one of the two would ever receive anything.
     command: ["python", "-m", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

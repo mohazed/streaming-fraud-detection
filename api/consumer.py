@@ -1,8 +1,7 @@
 """Kafka consumer thread feeding the SSE dashboard. Consumer group is unique
 per process (`dashboard-{uuid4()}`) with `auto.offset.reset=latest` so two API
 processes started by an accidental `--reload` fork each see the whole
-`fraud-alerts` stream instead of racing over its one partition. See PLAN.md §8
-Trap D.
+`fraud-alerts` stream instead of racing over its one partition - Trap D.
 """
 from __future__ import annotations
 
@@ -88,7 +87,7 @@ class AlertConsumer:
                     continue
                 self._handle(msg.value())
             except Exception:
-                pass  # the consumer thread must never die (PLAN §12 Phase 4a)
+                pass  # the consumer thread must never die
 
     def _handle(self, raw: Optional[bytes]) -> None:
         try:

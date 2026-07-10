@@ -6,7 +6,7 @@ re-trigger the `count >= 4` filter, producing the same alert repeatedly.
 `AlertDeduper` remembers `(rule, user_id, window_start)` keys it has already
 let through and evicts them once they are older than `ttl_seconds`. Plain
 Python, no Spark, so it is unit-testable standalone and safe to hold as
-driver-local state across streaming batches. See PLAN.md §8 Trap B.
+driver-local state across streaming batches.
 """
 from __future__ import annotations
 

@@ -1,9 +1,9 @@
 """Exercises spark/job.py's actual wiring (build_queries, the per-rule batch
 closures, AlertDeduper integration) end to end, off a file source instead of
 Kafka. `read_transactions`/`main` are thin Kafka/entrypoint adapters that need
-a real broker or spark-submit --packages to even import the connector - see
-PLAN.md §3 ("if a function needs a SparkSession to be tested, it is doing too
-much") - so they are exercised by the smoke test (Phase 5), not here.
+a real broker or spark-submit --packages to even import the connector - and
+if a function needs a SparkSession to be tested, it is doing too much - so
+they are exercised by the smoke test, not here.
 """
 from __future__ import annotations
 

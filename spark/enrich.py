@@ -1,5 +1,5 @@
 """City lookup + currency conversion. Required before any rule can run: R1
-filters on `amount_eur`, R3 groups on `country`. See PLAN.md §2.1, §5.
+filters on `amount_eur`, R3 groups on `country`.
 
 A broadcast left-join against the static `common/cities.py` table - never an
 API, never a shuffle-heavy join, and never drops a row for an unknown city.
@@ -14,8 +14,8 @@ from pyspark.sql import functions as F
 from common.cities import CITIES
 from common.contracts import FX_TO_EUR, LABEL_FIELD
 
-# PLAN.md §14: "no outgoing column matches /fraud|label|target/i before the
-# DataFrame reaches scoring.py." LABEL_FIELD (is_fraud) is the one expected
+# Invariant: no outgoing column matches /fraud|label|target/i before the
+# DataFrame reaches scoring.py. LABEL_FIELD (is_fraud) is the one expected
 # exception - it is ground truth carried straight through from the producer,
 # never derived here - so it is excluded before the check runs.
 _FORBIDDEN_COLUMN = re.compile(r"fraud|label|target", re.IGNORECASE)

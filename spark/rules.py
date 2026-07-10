@@ -1,6 +1,6 @@
 """R1-R4: each a pure Spark transformation producing rows shaped like
 ALERT_SCHEMA. Windowed rules (R2, R3) also carry a `window_start` column,
-consumed by the caller as the dedup key (see PLAN.md §8 Trap B) and stripped
+consumed by the caller as the dedup key (Trap B) and stripped
 before the row reaches a sink (spark/sinks.py selects only ALERT_SCHEMA
 fields). R4 (`ml_score`) is stateless like R1: it expects a `p_fraud` column
 already assembled by spark/scoring.py::add_p_fraud - feature engineering and

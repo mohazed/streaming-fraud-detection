@@ -1,7 +1,6 @@
 """Every alert lands in exactly three places through exactly one function:
 console, parquet, and the fraud-alerts Kafka topic. Whether an alert came from
 Q1 (unfiltered) or Q2/Q3 (post-AlertDeduper), it reaches here the same way.
-See PLAN.md §4, §11 test_sinks.py.
 """
 from __future__ import annotations
 

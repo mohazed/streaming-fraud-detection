@@ -1,8 +1,8 @@
-"""PLAN.md §14 runtime assertion: "if a query reports numInputRows == 0 for
-60 consecutive seconds while the producer runs, log WARNING: stream starved -
-check watermark/offsets." Deliberately not a StreamingQueryListener (cut in
-PLAN §17) - a plain polling loop over `query.lastProgress` is enough and
-keeps the monitor pure and independently testable, per PLAN §3.3.
+"""Runtime assertion: if a query reports numInputRows == 0 for 60 consecutive
+seconds while the producer runs, log WARNING: stream starved - check
+watermark/offsets. Deliberately not a StreamingQueryListener - a plain
+polling loop over `query.lastProgress` is enough and keeps the monitor pure
+and independently testable.
 """
 from __future__ import annotations
 

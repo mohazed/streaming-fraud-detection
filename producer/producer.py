@@ -1,8 +1,8 @@
 """Thin Kafka adapter around producer/simulator.py. No detection logic here.
 
 Timestamps are stamped with now() at send time, not the simulator's synthetic
-clock — see PLAN.md §2.2. Replaying backdated event time would make the
-watermark-based rules meaningless.
+clock. Replaying backdated event time would make the watermark-based rules
+meaningless.
 """
 from __future__ import annotations
 
@@ -46,7 +46,7 @@ def send(
     """Send each record to `producer` at ~`rate` msgs/sec. Returns count sent.
 
     Every record is validated against TRANSACTION_FIELDS + is_fraud before send;
-    a reject rate above 1% aborts rather than emitting garbage. See PLAN.md §14.
+    a reject rate above 1% aborts rather than emitting garbage.
     """
     validate_rate(rate)
     interval = 1.0 / rate

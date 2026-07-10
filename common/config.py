@@ -1,7 +1,6 @@
 """Runtime configuration: broker, topics, paths. All overridable from env.
 
 Checkpoint paths are derived per query name so they can never collide.
-See PLAN.md §8 Trap C.
 """
 from __future__ import annotations
 

@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Pre-warm the Ivy cache for the spark-sql-kafka connector at build time, so
 # `spark-submit --packages ...` resolves entirely from the local cache at
-# container start instead of hitting Maven Central (PLAN.md §12 Phase 5) -
+# container start instead of hitting Maven Central -
 # the classic failure mode when venue wifi is bad. The package string is
 # derived from the installed pyspark version, exactly like the Makefile does
 # for the host path, so the two can never drift apart.

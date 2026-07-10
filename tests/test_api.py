@@ -1,5 +1,5 @@
 """fastapi.testclient.TestClient; the Kafka consumer is always replaced by a
-fake - no broker, no network. See PLAN.md §12 Phase 4a, §11 test_api.py.
+fake - no broker, no network.
 """
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-/* fraud-stream dashboard. PLAN.md §12 Phase 4b.
+/* fraud-stream dashboard.
  *
  * No build step, no framework, no CDN. Vanilla ES2015+.
  *

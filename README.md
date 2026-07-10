@@ -107,10 +107,10 @@ change to the contract.
   project, at runtime or in the tests.
 - **Spark runs in local mode** (`--master local[*]`), inside a single
   container. There is no cluster, no multi-executor serialization story, and
-  no distributed state store - by design (see `PLAN.md` §3), not as a
-  shortcut that was meant to be temporary.
+  no distributed state store - by design, not as a shortcut that was meant
+  to be temporary.
 - **The model learns the simulator's fraud archetypes, not real fraud
-  patterns.** Of the fraud PLAN.md's simulator injects, only the `whale`
+  patterns.** Of the fraud archetypes the simulator injects, only the `whale`
   archetype (~18% of positives) is a pure amount anomaly visible to a
   row-level classifier; `burst` and `traveller` (~82% of positives) draw
   amounts from that same user's ordinary spending profile by construction -
@@ -120,7 +120,7 @@ change to the contract.
   this label mix - not a training bug, and R1-R3 alone already satisfy the
   brief's "at least 3 fraud detection rules" requirement in full.
 
-## Deliverables (PLAN.md §15)
+## Deliverables
 
 - `producer/`, `spark/` - source for the producer and the Spark app
 - `docs/sample_alerts.jsonl` - 100 real alerts from a local pipeline run
@@ -133,7 +133,7 @@ change to the contract.
 make test      # pytest, ~95 tests (needs JAVA_HOME pointed at a JDK 17 - see below)
 make cov       # same, plus the 85% coverage floor
 make train     # retrain ml/artifacts/{model.txt,threshold.json,user_profiles.parquet}
-make smoke     # PLAN.md §13's 18-assertion end-to-end check (needs Docker)
+make smoke     # 18-assertion end-to-end check (needs Docker)
 ```
 
 `pyspark`'s `pandas_udf` (used by the optional model) needs a JDK 17 JVM and
@@ -145,5 +145,3 @@ export JAVA_HOME=/path/to/a/jdk-17
 export PYSPARK_PYTHON=$(pwd)/.venv/bin/python3
 ```
 
-See `PLAN.md` for the full design (contracts, the five known traps, phase
-history) and `CODEBASE_NOTES.md` for the decisions log.

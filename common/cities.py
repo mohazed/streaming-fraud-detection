@@ -2,7 +2,7 @@
 
 The brief's generator emits `location` as a city name (`faker.city()`), but rule 3
 asks for transactions across multiple *countries*. A city carries no country by
-itself, so Spark broadcast-joins this table to derive one. See PLAN.md §2.1.
+itself, so Spark broadcast-joins this table to derive one.
 """
 from __future__ import annotations
 

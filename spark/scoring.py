@@ -1,4 +1,4 @@
-"""R4 (`ml_score`): feature assembly + LightGBM scoring. See PLAN.md §9.
+"""R4 (`ml_score`): feature assembly + LightGBM scoring.
 
 The booster loads lazily, once, from a plain absolute path - Spark runs in
 local mode (`--master local[*]`), so `SparkFiles`/`addFile` distribution is

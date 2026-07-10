@@ -1,7 +1,7 @@
 """FastAPI dashboard service: four routes over a Kafka consumer thread and an
-asyncio broadcaster. See PLAN.md §12 Phase 4a.
+asyncio broadcaster.
 
-Never run this with `--reload` (PLAN.md §8 Trap D): the reloader forks a
+Never run this with `--reload` (Trap D): the reloader forks a
 second process, both run this module's `lifespan` and join the same consumer
 group, and `fraud-alerts` has one partition - only one of the two processes
 ever receives anything, and which one is a coin flip.

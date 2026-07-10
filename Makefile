@@ -41,8 +41,8 @@ clean:
 
 # Runs producer + spark/job.py + api against a Kafka you already brought up
 # with `make up && make topics` (KAFKA_BOOTSTRAP_SERVERS defaults to
-# localhost:9092). Needs JAVA_HOME pointed at a JDK 17 for the pandas_udf -
-# see CODEBASE_NOTES "Phase 3 environment". Ctrl-C the api target to stop.
+# localhost:9092). Needs JAVA_HOME pointed at a JDK 17 for the pandas_udf.
+# Ctrl-C the api target to stop.
 run-local:
 	$(PYTHON) -m producer.producer --rate 50 --seed 42 --limit 200000 &
 	PYTHONPATH=$(CURDIR) spark-submit --packages $(SPARK_KAFKA_PACKAGE) spark/job.py &
@@ -54,7 +54,7 @@ train:
 api:
 	$(PYTHON) -m uvicorn api.main:app --host 0.0.0.0 --port 8000
 
-# PLAN.md §13. Brings its own Kafka up via docker compose, drives a real
+# Brings its own Kafka up via docker compose, drives a real
 # producer + spark-submit + api against it, and tears everything down again -
 # see scripts/smoke_test.py.
 smoke:

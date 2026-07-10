@@ -1,4 +1,4 @@
-"""Trains the R4 (`ml_score`) LightGBM booster. See PLAN.md §9.
+"""Trains the R4 (`ml_score`) LightGBM booster.
 
 200k records from the seeded simulator, a temporal 80/20 split (never
 shuffled - this is a time series), `user_profiles.parquet` built from the
@@ -126,17 +126,17 @@ def main() -> int:
     print(f"ROC-AUC (footnote, misleading at ~1% positives): {roc_auc:.4f}")
     print(f"threshold (argmax-F1 on validation PR curve): tau={tau:.4f}")
     if pr_auc < 0.80:
-        # ~82% of injected fraud (burst + traveller, see PLAN.md §6) is
-        # constructed to be statistically identical to that user's normal
-        # spending - no velocity/geo context is in FEATURE_ORDER by design
-        # (that is R2/R3's job, not R4's). Only whale-type fraud (~18% of
-        # positives, driven by amount_z) is separable from these nine
-        # features, which caps achievable PR-AUC well under the PLAN §9
-        # estimate of 0.85-0.95 for this label mix. Not a bug: R1-R3 alone
-        # already satisfy the brief's "3+ rules" requirement in full.
-        print(f"NOTE: PR-AUC {pr_auc:.4f} is below the PLAN.md §12 estimate of "
-              f"0.80+ - see the comment above main() for why this is expected, "
-              f"not a training bug.")
+        # ~82% of injected fraud (burst + traveller) is constructed to be
+        # statistically identical to that user's normal spending - no
+        # velocity/geo context is in FEATURE_ORDER by design (that is R2/R3's
+        # job, not R4's). Only whale-type fraud (~18% of positives, driven by
+        # amount_z) is separable from these nine features, which caps
+        # achievable PR-AUC well under the 0.85-0.95 estimate for this label
+        # mix. Not a bug: R1-R3 alone already satisfy the brief's "3+ rules"
+        # requirement in full.
+        print(f"NOTE: PR-AUC {pr_auc:.4f} is below the 0.80+ estimate - see "
+              f"the comment above main() for why this is expected, not a "
+              f"training bug.")
 
     model_dir = Path(CONFIG.model_dir)
     model_dir.mkdir(parents=True, exist_ok=True)

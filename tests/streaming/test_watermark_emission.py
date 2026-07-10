@@ -1,7 +1,7 @@
 """Trap A guard: outputMode("append") on a windowed aggregation emits nothing
 until the watermark passes the window end. If Q2/Q3 ever regress to `append`,
 this file source -> memory sink test goes red immediately instead of five
-minutes of silent console output. See PLAN.md §8 Trap A and §11.
+minutes of silent console output.
 
 Write this before writing R2. Watch it fail. Then make it pass.
 """
