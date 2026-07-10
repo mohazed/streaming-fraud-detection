@@ -69,6 +69,8 @@ class FakeMessage:
 
 
 class KafkaConsumerProtocol(Protocol):
+    def subscribe(self, topics: list) -> None: ...
+
     def poll(self, timeout: float = 1.0) -> Optional[FakeMessage]: ...
 
     def close(self) -> None: ...
@@ -79,7 +81,11 @@ class FakeKafkaConsumer:
 
     def __init__(self, messages: list[bytes]) -> None:
         self._messages = list(messages)
+        self.subscribed_topics: list = []
         self.closed = False
+
+    def subscribe(self, topics: list) -> None:
+        self.subscribed_topics = list(topics)
 
     def poll(self, timeout: float = 1.0) -> Optional[FakeMessage]:
         if self._messages:

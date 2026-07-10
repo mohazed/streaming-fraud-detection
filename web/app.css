@@ -1,0 +1,240 @@
+/* fraud-stream dashboard. PLAN.md §12 Phase 4b.
+ *
+ * Design law, not suggestion:
+ *  - Severity is the ONLY saturated colour on the page. Everything else is grey.
+ *  - Numbers are tabular monospace, so columns align.
+ *  - No shadows, no gradients, radius <= 6px.
+ *  - New alerts fade in over 150ms. Nothing else animates.
+ */
+
+:root {
+  --bg: #0d1117; --surface: #161b22; --border: #262c36;
+  --text: #e6edf3; --text-dim: #7d8590;
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --sev-medium: #d29922; --sev-high: #db6d28; --sev-critical: #f85149;
+  --bar: #484f58;               /* grey: bars that aren't severity-coloured */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  color: var(--text-dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+/* ---- header ---- */
+header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+header h1 {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.pill {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+.pill::before {
+  content: "";
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  background: var(--text-dim);
+}
+.pill-live::before        { background: #3fb950; }   /* the one non-severity accent: connection health */
+.pill-reconnecting::before,
+.pill-connecting::before  { background: var(--text-dim); }
+
+/* ---- Panel 1: Vitals strip ---- */
+.strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.stat { display: flex; flex-direction: column; gap: 4px; }
+.stat-val { font-size: 30px; font-weight: 600; }
+
+.bars { margin-top: 6px; }
+.bars svg { display: block; }
+.bar-label { fill: var(--text-dim); font-size: 11px; font-family: var(--sans); }
+.bar-val   { fill: var(--text); font-size: 11px; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* ---- layout ---- */
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.panel-head {
+  color: var(--text-dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+/* ---- Panel 2: Feed ---- */
+#feed-panel { display: flex; flex-direction: column; min-height: 0; }
+.table-wrap { overflow: auto; flex: 1; min-height: 0; }
+
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  position: sticky; top: 0;
+  background: var(--surface);
+  text-align: left;
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+tbody td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.c-sev  { width: 4px; padding-left: 0 !important; padding-right: 0 !important; }
+.c-amt  { text-align: right; }
+.c-time { text-align: right; }
+
+.alert-row { cursor: pointer; }
+.alert-row:hover { background: rgba(255, 255, 255, 0.03); }
+
+/* severity swatch: the only saturated colour in the feed */
+.swatch { width: 4px; padding: 0 !important; }
+.swatch > span {
+  display: block;
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+}
+.sev-medium   > span { background: var(--sev-medium); }
+.sev-high     > span { background: var(--sev-high); }
+.sev-critical > span { background: var(--sev-critical); }
+
+.mono-cell { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.amt  { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.rel  { text-align: right; color: var(--text-dim); font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.rule { color: var(--text-dim); }
+
+.detail-row.hidden { display: none; }
+.detail-row td { padding: 0; border-bottom: 1px solid var(--border); }
+.detail-row pre {
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--bg);
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* the only animation on the page */
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.fade { animation: fadein 150ms ease-out; }
+
+/* ---- Panel 3: Metrics ---- */
+#metrics { display: flex; flex-direction: column; gap: 14px; }
+
+.tau-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+.tau-row label { font-family: var(--mono); color: var(--text-dim); }
+.tau-row input[type=range] {
+  -webkit-appearance: none; appearance: none;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+}
+.tau-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+  cursor: pointer;
+}
+.tau-row input[type=range]::-moz-range-thumb {
+  width: 14px; height: 14px; border: none;
+  border-radius: 50%;
+  background: var(--text);
+  cursor: pointer;
+}
+#tau-val { color: var(--text); }
+
+.note { color: var(--text-dim); font-size: 11px; }
+
+.pr { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pr .big { font-size: 26px; font-weight: 600; margin-top: 2px; }
+
+.cm-title { margin-bottom: -4px; }
+.cm { width: 100%; border-collapse: collapse; }
+.cm th, .cm td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: center;
+}
+.cm thead th, .cm tbody th {
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.cm tbody td { font-size: 16px; }
+
+/* ---- narrow screens: stack ---- */
+@media (max-width: 760px) {
+  .strip { grid-template-columns: repeat(2, 1fr); }
+  main { grid-template-columns: 1fr; }
+}

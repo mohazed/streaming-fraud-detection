@@ -862,7 +862,9 @@ Not pytest. Run this before you present.
 won't.
 
 **Step 5**: find a seed that produces at least one of each archetype within 5000
-records. Find it once, hardcode it, write it here: `SEED = ____`.
+records. Find it once, hardcode it, write it here: `SEED = 42` (31 whale, 6 burst,
+28 traveller in the first 5000 records - already the seed used everywhere else in
+this project, so no new determinism to track).
 
 ---
 

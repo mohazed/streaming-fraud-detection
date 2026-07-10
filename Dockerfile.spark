@@ -1,0 +1,30 @@
+# Single image shared by the spark-job, producer, and api services (Compose
+# Phase 5) - all three only need this project's Python dependencies, and one
+# image keeps the Ivy pre-warm (below) in exactly one place.
+FROM python:3.12-slim
+
+# lightgbm's shared library needs libgomp1 at runtime; openjdk is Spark's JVM.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        openjdk-17-jre-headless libgomp1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -sfn "$(dirname "$(dirname "$(readlink -f "$(which java)")")")" /opt/java
+ENV JAVA_HOME=/opt/java
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Pre-warm the Ivy cache for the spark-sql-kafka connector at build time, so
+# `spark-submit --packages ...` resolves entirely from the local cache at
+# container start instead of hitting Maven Central (PLAN.md §12 Phase 5) -
+# the classic failure mode when venue wifi is bad. The package string is
+# derived from the installed pyspark version, exactly like the Makefile does
+# for the host path, so the two can never drift apart.
+RUN echo "from pyspark.sql import SparkSession; SparkSession.builder.master('local[1]').appName('ivy-warmup').getOrCreate().stop()" > /tmp/warmup.py \
+    && SPARK_KAFKA_PACKAGE="org.apache.spark:spark-sql-kafka-0-10_2.12:$(python -c 'import pyspark; print(pyspark.__version__)')" \
+    && spark-submit --packages "${SPARK_KAFKA_PACKAGE}" /tmp/warmup.py \
+    && rm /tmp/warmup.py
+
+COPY . .

@@ -22,3 +22,73 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+
+  # One-shot: creates `transactions` (3 partitions) and `fraud-alerts` (1
+  # partition) - the brief's exact topic names - then exits. spark-job,
+  # producer, and api all wait on this instead of relying on Kafka's
+  # auto-create-on-first-use default, so partition counts match PLAN.md §12
+  # exactly on every `docker compose up`, not just the first one.
+  kafka-init:
+    image: apache/kafka:3.7.0
+    depends_on:
+      kafka:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        set -e
+        /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --topic transactions \
+          --bootstrap-server kafka:29092 --partitions 3 --replication-factor 1
+        /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --topic fraud-alerts \
+          --bootstrap-server kafka:29092 --partitions 1 --replication-factor 1
+        /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server kafka:29092
+
+  spark-job:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    container_name: spark-job
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    volumes:
+      - ./data:/app/data
+      - ./ml/artifacts:/app/ml/artifacts
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        set -e
+        SPARK_KAFKA_PACKAGE=org.apache.spark:spark-sql-kafka-0-10_2.12:$$(python -c 'import pyspark; print(pyspark.__version__)')
+        if [ ! -f ml/artifacts/model.txt ]; then python -m ml.train; fi
+        spark-submit --packages $$SPARK_KAFKA_PACKAGE spark/job.py
+
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    container_name: producer
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    command: ["python", "-m", "producer.producer", "--rate", "50", "--seed", "42", "--limit", "200000"]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    container_name: api
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    ports:
+      - "8000:8000"
+    # Never --reload (PLAN.md §8 Trap D): the reloader forks a second process
+    # that joins the same consumer group as the first, and fraud-alerts has
+    # one partition - only one of the two would ever receive anything.
+    command: ["python", "-m", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
