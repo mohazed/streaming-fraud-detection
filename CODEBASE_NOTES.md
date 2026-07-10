@@ -682,6 +682,57 @@ rest recorded here.
   is stricter than the schema's own nullability and would re-break if any
   producer emitted a legitimately sparse record. Defense-in-depth: consider
   validating only the non-nullable fields.
+- **[MEDIUM - NOT Docker-related] `make test` fails from a clean clone.**
+  `ml/artifacts/` is git-ignored (only `.gitkeep` is tracked), and
+  `tests/streaming/test_job.py::test_build_queries_wires_rules_dedup_and_sinks`
+  calls `build_queries`, which unconditionally `scoring._load()`s
+  `ml/artifacts/model.txt` and reads `user_profiles.parquet`. Nothing in the
+  `test`/`cov`/`run-local` Make targets (or a test fixture) trains first, so a
+  fresh checkout must run `make train` (itself needing JDK 17 + PYSPARK_PYTHON
+  + lightgbm) before `make test` passes. **Empirically confirmed**: moving the
+  two artifacts aside makes that test FAIL with a model-not-found error.
+  Fix options: (a) commit the ~415 KB artifacts, (b) have `test_job` build a
+  tiny booster + `user_profiles` into a tmp dir and monkeypatch
+  `scoring.MODEL_PATH`/`THRESHOLD_PATH` + a `MODEL_DIR`-overridden config (note
+  `scoring.MODEL_PATH` is a module constant resolved at import, so overriding
+  `config.model_dir` alone is not enough - see below), or (c) make
+  `build_queries` skip the R4 union when artifacts are absent.
+- **[LOW] `build_queries(config=...)` half-ignores its own config for the
+  model.** It reads `user_profiles` from `config.user_profiles_path` (respects
+  the arg) but `scoring._load()`/`load_threshold()` use the module-level
+  `scoring.MODEL_PATH`/`THRESHOLD_PATH` constants (resolved from the global
+  `CONFIG` at import time), ignoring the passed `config`. Harmless in
+  production (one config) but it is why (b) above needs a monkeypatch, and it
+  means a `MODEL_DIR` env override does not fully redirect the job.
+- **[INFO] Untested functionality that does NOT need Docker/Kafka:**
+  - **`web/app.js` (303 lines) has zero automated tests** - the
+    precision/recall/confusion math, the tau slider, the alerts/min rate
+    window, snapshot↔stream `alert_id` dedup, and the CAP buffer trim. PLAN
+    §11 exempts `web/` (no JS runner), and it was verified once by hand via a
+    node-stubbed DOM (`docs/dashboard_demo.md` §4), but nothing guards it in
+    `make test`. Also a minor real bug: `state.seen` (the dedup Set) is never
+    pruned when `state.alerts`/the DOM trims to CAP, so it grows with total
+    alerts ever streamed - a slow browser-tab memory leak, bounded only by run
+    length.
+  - **No train/serve feature-parity test.** The whole design leans on
+    `spark/scoring.py::add_ml_features` (Spark) computing the *identical* nine
+    FEATURE_ORDER columns as `ml/train.py::build_features` (pandas) - the
+    dayofweek convention and the `is_new_user`/`amount_z` fallback are called
+    out as silent-mismatch hazards - yet no test feeds the same rows to both
+    and asserts equality. `score_frame` is tested pure; the Spark
+    feature-assembly path is only executed (not asserted) by `test_job`.
+  - **Producer safety assertion (PLAN §14) untested.** `producer.py:59-60,71`
+    - the per-record reject skip and the ">1% reject rate -> RuntimeError"
+    guard - are never exercised; every `test_producer` record is well-formed.
+    Cheap to test with `FakeProducer` + malformed records.
+  - **`spark/health.py::poll_forever` (51-57) untested.** The
+    `StreamHealthMonitor.record` logic is tested standalone, but the adapter
+    that reads `query.lastProgress` and drives it on a loop is not - testable
+    with a fake query object and a `stop_event` that trips after one pass, no
+    broker needed.
+  - **Minor uncovered-but-testable branches:** `sinks.console_sink` /
+    `default_sinks()` (no broker needed), `consumer._run`'s `msg.error()`
+    branch (FakeMessage already supports an error arg), `build_spark_session`.
 - **[INFO - PLAN §16 check #5] `docker compose up` and `make smoke` remain
   unrun** (no Docker in this sandbox) - see the two Known-issues entries
   above. Every other §16 check passes: seven fields spelled correctly in an
