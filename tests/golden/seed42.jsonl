@@ -1,0 +1,100 @@
+{"user_id": "u1000", "amount": 43.07, "currency": "EUR", "timestamp": "2024-01-01T00:00:00Z", "location": "Lyon", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000000"}
+{"user_id": "u1000", "amount": 24.82, "currency": "EUR", "timestamp": "2024-01-01T00:00:00Z", "location": "Lyon", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000001"}
+{"user_id": "u1000", "amount": 25.51, "currency": "USD", "timestamp": "2024-01-01T00:00:01Z", "location": "Lyon", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000002"}
+{"user_id": "u1000", "amount": 26.33, "currency": "GBP", "timestamp": "2024-01-01T00:00:03Z", "location": "Lyon", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000003"}
+{"user_id": "u1000", "amount": 60.18, "currency": "USD", "timestamp": "2024-01-01T00:00:05Z", "location": "Lyon", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000004"}
+{"user_id": "u1000", "amount": 43.7, "currency": "GBP", "timestamp": "2024-01-01T00:00:06Z", "location": "Lyon", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000005"}
+{"user_id": "u1000", "amount": 90.34, "currency": "EUR", "timestamp": "2024-01-01T00:00:07Z", "location": "Dublin", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000006"}
+{"user_id": "u1000", "amount": 26.74, "currency": "GBP", "timestamp": "2024-01-01T00:00:08Z", "location": "Lyon", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000007"}
+{"user_id": "u1000", "amount": 63.23, "currency": "EUR", "timestamp": "2024-01-01T00:00:08Z", "location": "Lyon", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000008"}
+{"user_id": "u1001", "amount": 101.23, "currency": "USD", "timestamp": "2024-01-01T00:00:08Z", "location": "Paris", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000009"}
+{"user_id": "u1001", "amount": 203.64, "currency": "USD", "timestamp": "2024-01-01T00:00:10Z", "location": "Dubai", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000010"}
+{"user_id": "u1000", "amount": 40.11, "currency": "GBP", "timestamp": "2024-01-01T00:00:10Z", "location": "Chicago", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000011"}
+{"user_id": "u1000", "amount": 45.62, "currency": "EUR", "timestamp": "2024-01-01T00:00:12Z", "location": "Porto", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000012"}
+{"user_id": "u1000", "amount": 22.75, "currency": "EUR", "timestamp": "2024-01-01T00:00:12Z", "location": "Lyon", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000013"}
+{"user_id": "u1001", "amount": 309.95, "currency": "GBP", "timestamp": "2024-01-01T00:00:13Z", "location": "Dubai", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000014"}
+{"user_id": "u1001", "amount": 82.42, "currency": "USD", "timestamp": "2024-01-01T00:00:15Z", "location": "Dubai", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000015"}
+{"user_id": "u1002", "amount": 465.71, "currency": "USD", "timestamp": "2024-01-01T00:00:16Z", "location": "Dubai", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000016"}
+{"user_id": "u1001", "amount": 82.51, "currency": "USD", "timestamp": "2024-01-01T00:00:16Z", "location": "Dubai", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000017"}
+{"user_id": "u1002", "amount": 637.43, "currency": "GBP", "timestamp": "2024-01-01T00:00:18Z", "location": "Munich", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000018"}
+{"user_id": "u1001", "amount": 74.49, "currency": "EUR", "timestamp": "2024-01-01T00:00:18Z", "location": "Mexico City", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000019"}
+{"user_id": "u1000", "amount": 53.35, "currency": "USD", "timestamp": "2024-01-01T00:00:18Z", "location": "Lyon", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000020"}
+{"user_id": "u1001", "amount": 45.03, "currency": "USD", "timestamp": "2024-01-01T00:00:20Z", "location": "Dubai", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000021"}
+{"user_id": "u1002", "amount": 572.74, "currency": "EUR", "timestamp": "2024-01-01T00:00:22Z", "location": "Dubai", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000022"}
+{"user_id": "u1003", "amount": 110.56, "currency": "EUR", "timestamp": "2024-01-01T00:00:23Z", "location": "Tokyo", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000023"}
+{"user_id": "u1004", "amount": 86.98, "currency": "GBP", "timestamp": "2024-01-01T00:00:25Z", "location": "Rotterdam", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000024"}
+{"user_id": "u1001", "amount": 172.95, "currency": "USD", "timestamp": "2024-01-01T00:00:27Z", "location": "Dubai", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000025"}
+{"user_id": "u1005", "amount": 34.83, "currency": "GBP", "timestamp": "2024-01-01T00:00:28Z", "location": "Vancouver", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000026"}
+{"user_id": "u1006", "amount": 43.06, "currency": "USD", "timestamp": "2024-01-01T00:00:31Z", "location": "Mexico City", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000027"}
+{"user_id": "u1002", "amount": 581.23, "currency": "EUR", "timestamp": "2024-01-01T00:00:32Z", "location": "Dubai", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000028"}
+{"user_id": "u1001", "amount": 162.87, "currency": "GBP", "timestamp": "2024-01-01T00:00:35Z", "location": "Dubai", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000029"}
+{"user_id": "u1007", "amount": 138.86, "currency": "USD", "timestamp": "2024-01-01T00:00:36Z", "location": "Marseille", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000030"}
+{"user_id": "u1001", "amount": 96.51, "currency": "USD", "timestamp": "2024-01-01T00:00:38Z", "location": "Zurich", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000031"}
+{"user_id": "u1006", "amount": 218.12, "currency": "GBP", "timestamp": "2024-01-01T00:00:40Z", "location": "Mexico City", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000032"}
+{"user_id": "u1008", "amount": 75.25, "currency": "USD", "timestamp": "2024-01-01T00:00:40Z", "location": "Athens", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000033"}
+{"user_id": "u1008", "amount": 408.19, "currency": "EUR", "timestamp": "2024-01-01T00:00:40Z", "location": "Athens", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000034"}
+{"user_id": "u1009", "amount": 283.12, "currency": "EUR", "timestamp": "2024-01-01T00:00:43Z", "location": "Copenhagen", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000035"}
+{"user_id": "u1003", "amount": 228.93, "currency": "GBP", "timestamp": "2024-01-01T00:00:45Z", "location": "Tokyo", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000036"}
+{"user_id": "u1008", "amount": 135.8, "currency": "USD", "timestamp": "2024-01-01T00:00:47Z", "location": "Athens", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000037"}
+{"user_id": "u1002", "amount": 641.26, "currency": "GBP", "timestamp": "2024-01-01T00:00:47Z", "location": "Dubai", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000038"}
+{"user_id": "u1005", "amount": 39.04, "currency": "EUR", "timestamp": "2024-01-01T00:00:48Z", "location": "Vancouver", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000039"}
+{"user_id": "u1004", "amount": 110.81, "currency": "USD", "timestamp": "2024-01-01T00:00:50Z", "location": "Zurich", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000040"}
+{"user_id": "u1010", "amount": 2182.81, "currency": "GBP", "timestamp": "2024-01-01T00:00:52Z", "location": "Lyon", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000041"}
+{"user_id": "u1011", "amount": 343.71, "currency": "GBP", "timestamp": "2024-01-01T00:00:53Z", "location": "Paris", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000042"}
+{"user_id": "u1007", "amount": 1404.91, "currency": "USD", "timestamp": "2024-01-01T00:00:53Z", "location": "Mexico City", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000043"}
+{"user_id": "u1007", "amount": 150.94, "currency": "GBP", "timestamp": "2024-01-01T00:00:55Z", "location": "Barcelona", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000044"}
+{"user_id": "u1001", "amount": 178.93, "currency": "USD", "timestamp": "2024-01-01T00:00:56Z", "location": "Berlin", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000045"}
+{"user_id": "u1011", "amount": 123.8, "currency": "USD", "timestamp": "2024-01-01T00:00:56Z", "location": "Paris", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000046"}
+{"user_id": "u1009", "amount": 407.2, "currency": "USD", "timestamp": "2024-01-01T00:00:57Z", "location": "Porto", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000047"}
+{"user_id": "u1006", "amount": 153.97, "currency": "GBP", "timestamp": "2024-01-01T00:00:59Z", "location": "Mexico City", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000048"}
+{"user_id": "u1010", "amount": 1794.1, "currency": "EUR", "timestamp": "2024-01-01T00:00:59Z", "location": "Sydney", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000049"}
+{"user_id": "u1010", "amount": 662.03, "currency": "EUR", "timestamp": "2024-01-01T00:01:01Z", "location": "Lyon", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000050"}
+{"user_id": "u1006", "amount": 71.24, "currency": "USD", "timestamp": "2024-01-01T00:01:01Z", "location": "Mexico City", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000051"}
+{"user_id": "u1001", "amount": 305.13, "currency": "EUR", "timestamp": "2024-01-01T00:01:01Z", "location": "Dubai", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000052"}
+{"user_id": "u1012", "amount": 52.29, "currency": "GBP", "timestamp": "2024-01-01T00:01:02Z", "location": "Hamburg", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000053"}
+{"user_id": "u1004", "amount": 247.09, "currency": "USD", "timestamp": "2024-01-01T00:01:02Z", "location": "Amsterdam", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000054"}
+{"user_id": "u1001", "amount": 179.55, "currency": "GBP", "timestamp": "2024-01-01T00:01:02Z", "location": "Dubai", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000055"}
+{"user_id": "u1010", "amount": 1010.65, "currency": "USD", "timestamp": "2024-01-01T00:01:04Z", "location": "Los Angeles", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000056"}
+{"user_id": "u1007", "amount": 300.11, "currency": "GBP", "timestamp": "2024-01-01T00:01:04Z", "location": "Barcelona", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000057"}
+{"user_id": "u1011", "amount": 263.51, "currency": "EUR", "timestamp": "2024-01-01T00:01:06Z", "location": "Paris", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000058"}
+{"user_id": "u1010", "amount": 1162.67, "currency": "USD", "timestamp": "2024-01-01T00:01:07Z", "location": "Lyon", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000059"}
+{"user_id": "u1009", "amount": 233.26, "currency": "EUR", "timestamp": "2024-01-01T00:01:08Z", "location": "Copenhagen", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000060"}
+{"user_id": "u1011", "amount": 202.15, "currency": "USD", "timestamp": "2024-01-01T00:01:10Z", "location": "Paris", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000061"}
+{"user_id": "u1009", "amount": 139.5, "currency": "USD", "timestamp": "2024-01-01T00:01:11Z", "location": "Mexico City", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000062"}
+{"user_id": "u1004", "amount": 39.38, "currency": "USD", "timestamp": "2024-01-01T00:01:11Z", "location": "Sao Paulo", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000063"}
+{"user_id": "u1013", "amount": 177.9, "currency": "USD", "timestamp": "2024-01-01T00:01:14Z", "location": "New York", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000064"}
+{"user_id": "u1014", "amount": 232.76, "currency": "EUR", "timestamp": "2024-01-01T00:01:16Z", "location": "London", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000065"}
+{"user_id": "u1015", "amount": 30.37, "currency": "EUR", "timestamp": "2024-01-01T00:01:17Z", "location": "Porto", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000066"}
+{"user_id": "u1013", "amount": 185.11, "currency": "EUR", "timestamp": "2024-01-01T00:01:17Z", "location": "New York", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000067"}
+{"user_id": "u1009", "amount": 193.97, "currency": "GBP", "timestamp": "2024-01-01T00:01:18Z", "location": "Rotterdam", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000068"}
+{"user_id": "u1016", "amount": 23.03, "currency": "USD", "timestamp": "2024-01-01T00:01:20Z", "location": "Zurich", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000069"}
+{"user_id": "u1007", "amount": 300.67, "currency": "EUR", "timestamp": "2024-01-01T00:01:21Z", "location": "Barcelona", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000070"}
+{"user_id": "u1004", "amount": 48.37, "currency": "GBP", "timestamp": "2024-01-01T00:01:22Z", "location": "Sao Paulo", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000071"}
+{"user_id": "u1008", "amount": 200.06, "currency": "EUR", "timestamp": "2024-01-01T00:01:23Z", "location": "Dublin", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000072"}
+{"user_id": "u1000", "amount": 55.85, "currency": "GBP", "timestamp": "2024-01-01T00:01:25Z", "location": "Milan", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000073"}
+{"user_id": "u1002", "amount": 560.67, "currency": "USD", "timestamp": "2024-01-01T00:01:27Z", "location": "Warsaw", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000074"}
+{"user_id": "u1012", "amount": 78.52, "currency": "USD", "timestamp": "2024-01-01T00:01:28Z", "location": "Hamburg", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000075"}
+{"user_id": "u1016", "amount": 37.47, "currency": "EUR", "timestamp": "2024-01-01T00:01:29Z", "location": "Zurich", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000076"}
+{"user_id": "u1001", "amount": 69.5, "currency": "USD", "timestamp": "2024-01-01T00:01:31Z", "location": "Los Angeles", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000077"}
+{"user_id": "u1007", "amount": 281.82, "currency": "EUR", "timestamp": "2024-01-01T00:01:31Z", "location": "Barcelona", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000078"}
+{"user_id": "u1003", "amount": 311.92, "currency": "GBP", "timestamp": "2024-01-01T00:01:33Z", "location": "Tokyo", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000079"}
+{"user_id": "u1007", "amount": 197.62, "currency": "EUR", "timestamp": "2024-01-01T00:01:34Z", "location": "Vienna", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000080"}
+{"user_id": "u1016", "amount": 57.28, "currency": "GBP", "timestamp": "2024-01-01T00:01:36Z", "location": "Helsinki", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000081"}
+{"user_id": "u1012", "amount": 34.44, "currency": "EUR", "timestamp": "2024-01-01T00:01:37Z", "location": "Hamburg", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000082"}
+{"user_id": "u1017", "amount": 429.31, "currency": "EUR", "timestamp": "2024-01-01T00:01:38Z", "location": "Madrid", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000083"}
+{"user_id": "u1014", "amount": 92.22, "currency": "USD", "timestamp": "2024-01-01T00:01:39Z", "location": "Vancouver", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000084"}
+{"user_id": "u1015", "amount": 36.3, "currency": "EUR", "timestamp": "2024-01-01T00:01:40Z", "location": "New York", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000085"}
+{"user_id": "u1018", "amount": 60.33, "currency": "EUR", "timestamp": "2024-01-01T00:01:42Z", "location": "London", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000086"}
+{"user_id": "u1015", "amount": 22.97, "currency": "USD", "timestamp": "2024-01-01T00:01:43Z", "location": "Athens", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000087"}
+{"user_id": "u1019", "amount": 303.56, "currency": "USD", "timestamp": "2024-01-01T00:01:46Z", "location": "Helsinki", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000088"}
+{"user_id": "u1009", "amount": 165.25, "currency": "GBP", "timestamp": "2024-01-01T00:01:47Z", "location": "Los Angeles", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000089"}
+{"user_id": "u1007", "amount": 245.23, "currency": "GBP", "timestamp": "2024-01-01T00:01:49Z", "location": "Barcelona", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000090"}
+{"user_id": "u1004", "amount": 414.11, "currency": "GBP", "timestamp": "2024-01-01T00:01:50Z", "location": "Sao Paulo", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000091"}
+{"user_id": "u1002", "amount": 844.79, "currency": "USD", "timestamp": "2024-01-01T00:01:52Z", "location": "Dubai", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000092"}
+{"user_id": "u1016", "amount": 10.75, "currency": "USD", "timestamp": "2024-01-01T00:01:54Z", "location": "Zurich", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000093"}
+{"user_id": "u1004", "amount": 148.59, "currency": "GBP", "timestamp": "2024-01-01T00:01:54Z", "location": "Mexico City", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000094"}
+{"user_id": "u1020", "amount": 36.74, "currency": "GBP", "timestamp": "2024-01-01T00:01:55Z", "location": "Vancouver", "method": "paypal", "is_fraud": 0, "transaction_id": "t-0000095"}
+{"user_id": "u1017", "amount": 132.98, "currency": "GBP", "timestamp": "2024-01-01T00:01:56Z", "location": "New York", "method": "credit_card", "is_fraud": 0, "transaction_id": "t-0000096"}
+{"user_id": "u1003", "amount": 181.68, "currency": "EUR", "timestamp": "2024-01-01T00:01:57Z", "location": "Madrid", "method": "debit_card", "is_fraud": 0, "transaction_id": "t-0000097"}
+{"user_id": "u1017", "amount": 148.47, "currency": "EUR", "timestamp": "2024-01-01T00:01:58Z", "location": "New York", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000098"}
+{"user_id": "u1008", "amount": 82.1, "currency": "USD", "timestamp": "2024-01-01T00:02:00Z", "location": "Prague", "method": "crypto", "is_fraud": 0, "transaction_id": "t-0000099"}
