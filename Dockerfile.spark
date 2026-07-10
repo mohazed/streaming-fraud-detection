@@ -1,7 +1,10 @@
 # Single image shared by the spark-job, producer, and api services (Compose
 # Phase 5) - all three only need this project's Python dependencies, and one
 # image keeps the Ivy pre-warm (below) in exactly one place.
-FROM python:3.12-slim
+# Pinned to bookworm (Debian 12): the plain `python:3.12-slim` tag has moved to
+# Debian 13 (trixie), whose repos dropped openjdk-17 in favour of openjdk-21,
+# which PySpark 3.5.x does not support (Java 8/11/17 only).
+FROM python:3.12-slim-bookworm
 
 # lightgbm's shared library needs libgomp1 at runtime; openjdk is Spark's JVM.
 RUN apt-get update && apt-get install -y --no-install-recommends \
