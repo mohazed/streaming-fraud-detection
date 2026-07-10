@@ -74,6 +74,10 @@ services:
     command:
       - |
         set -e
+        # A model trained on a Windows host ships with CRLF line endings;
+        # LightGBM's C++ parser on Linux chokes on the bare \r. Strip them
+        # here as a safety net (scoring.py also normalises via model_str).
+        if [ -f ml/artifacts/model.txt ]; then sed -i 's/\r$$//' ml/artifacts/model.txt; fi
         SPARK_KAFKA_PACKAGE=org.apache.spark:spark-sql-kafka-0-10_2.12:$$(python -c 'import pyspark; print(pyspark.__version__)')
         if [ ! -f ml/artifacts/model.txt ]; then python -m ml.train; fi
         spark-submit --packages $$SPARK_KAFKA_PACKAGE spark/job.py

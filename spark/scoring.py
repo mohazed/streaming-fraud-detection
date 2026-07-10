@@ -30,7 +30,12 @@ _threshold: float | None = None
 def _load() -> lgb.Booster:
     global _booster
     if _booster is None:
-        booster = lgb.Booster(model_file=MODEL_PATH)
+        # model_str (not model_file) so Python's read_text() normalises
+        # Windows CRLF -> LF before the C++ parser ever sees the bytes.
+        # Without this, a model trained on a Windows host crashes LightGBM
+        # inside the Linux container with "Model format error, expect a tree".
+        model_text = Path(MODEL_PATH).read_text()
+        booster = lgb.Booster(model_str=model_text)
         assert tuple(booster.feature_name()) == FEATURE_ORDER, \
             "model features do not match FEATURE_ORDER - retrain"
         _booster = booster
