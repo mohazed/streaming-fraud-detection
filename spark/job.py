@@ -32,9 +32,15 @@ log = logging.getLogger(__name__)
 
 
 def build_spark_session(app_name: str = "fraud-stream") -> SparkSession:
+    # local[2], not local[*]: this job's per-trigger volume doesn't need more
+    # cores, and on memory-constrained dev machines local[*] spins up one
+    # thread pool entry per core for no throughput benefit. driver.memory is
+    # set explicitly (Spark's local-mode default is 1g) so container memory
+    # limits (docker-compose.yml's mem_limit) have a known quantity to fit.
     return (
-        SparkSession.builder.appName(app_name).master("local[*]")
+        SparkSession.builder.appName(app_name).master("local[2]")
         .config("spark.sql.session.timeZone", "UTC")
+        .config("spark.driver.memory", "768m")
         .getOrCreate()
     )
 

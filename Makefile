@@ -45,7 +45,7 @@ clean:
 # see CODEBASE_NOTES "Phase 3 environment". Ctrl-C the api target to stop.
 run-local:
 	$(PYTHON) -m producer.producer --rate 50 --seed 42 --limit 200000 &
-	spark-submit --packages $(SPARK_KAFKA_PACKAGE) spark/job.py &
+	PYTHONPATH=$(CURDIR) spark-submit --packages $(SPARK_KAFKA_PACKAGE) spark/job.py &
 	$(PYTHON) -m uvicorn api.main:app --host 0.0.0.0 --port 8000
 
 train:

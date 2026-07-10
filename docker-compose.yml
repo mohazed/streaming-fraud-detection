@@ -17,6 +17,12 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
+      # Default JVM heap for this image is 1G; a single-broker dev instance
+      # with two small topics doesn't need it, and it's the single biggest
+      # fixed cost on memory-constrained dev machines.
+      KAFKA_HEAP_OPTS: "-Xmx512m -Xms512m"
+    mem_limit: 768m
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092"]
       interval: 5s
@@ -53,6 +59,14 @@ services:
         condition: service_completed_successfully
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      # spark-submit puts the script's own directory (/app/spark), not the
+      # WORKDIR (/app), at the front of sys.path - without this, `common` is
+      # unimportable from spark/job.py. producer/api don't need this since
+      # they're launched via `python -m`, which already puts the cwd on
+      # sys.path.
+      PYTHONPATH: /app
+    mem_limit: 1536m
+    restart: on-failure:3
     volumes:
       - ./data:/app/data
       - ./ml/artifacts:/app/ml/artifacts
@@ -74,6 +88,8 @@ services:
         condition: service_completed_successfully
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    mem_limit: 256m
+    restart: on-failure:3
     command: ["python", "-m", "producer.producer", "--rate", "50", "--seed", "42", "--limit", "200000"]
 
   api:
@@ -88,6 +104,8 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
     ports:
       - "8000:8000"
+    mem_limit: 256m
+    restart: on-failure:3
     # Never --reload (PLAN.md §8 Trap D): the reloader forks a second process
     # that joins the same consumer group as the first, and fraud-alerts has
     # one partition - only one of the two would ever receive anything.
